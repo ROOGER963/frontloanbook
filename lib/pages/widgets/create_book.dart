@@ -7,6 +7,8 @@ import 'dart:convert';
 class CreateBookLoan extends StatefulWidget {
   const CreateBookLoan({Key? key}) : super(key: key);
 
+  
+
   @override
   State<CreateBookLoan> createState() => _CreateBookLoanState();
 }
@@ -74,6 +76,7 @@ class _CreateBookLoanState extends State<CreateBookLoan> {
                           PopupMenuButton(
                             onSelected: (value) {
                               if (value == 'edit') {
+                                navedateToEditPage(dt);
                                 // Agregar lógica para la edición si es necesario
                               } else if (value == 'delete') {
                                 deleteById(id);
@@ -116,6 +119,20 @@ class _CreateBookLoanState extends State<CreateBookLoan> {
     );
   }
 
+  void navedateToEditPage(Map dt) {
+    final route = MaterialPageRoute(builder: (context) => AddTodoPage(todo:dt));
+    Navigator.push(context, route);
+  }
+
+  Future<void> navedateToAddPage() async {
+    final route = MaterialPageRoute(builder: (context) => AddTodoPage());
+    await Navigator.push(context, route);
+    setState(() {
+      isLoan = true;
+    });
+    fetchTodo();
+  }
+
   Future<void> deleteById(String id) async {
     final url = 'http://localhost:8080/api/v1/books/$id';
     final uri = Uri.parse(url);
@@ -126,7 +143,7 @@ class _CreateBookLoanState extends State<CreateBookLoan> {
         data = filtered;
       });
     } else {
-      // Manejar el caso cuando la eliminación no es exitosa
+      showErrorMessage('No se pudo eliminar');
     }
   }
 
@@ -145,5 +162,21 @@ class _CreateBookLoanState extends State<CreateBookLoan> {
     setState(() {
       isLoan = false;
     });
+  }
+
+  void showSuccessMessage(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void showErrorMessage(String message) {
+    final snackBar = SnackBar(
+      content: Text(
+        message,
+        style: TextStyle(color: Colors.black87),
+      ),
+      backgroundColor: const Color.fromARGB(255, 240, 122, 114),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
