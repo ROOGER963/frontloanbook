@@ -30,7 +30,7 @@ class MenuLateral extends StatelessWidget {
               ),
               otherAccountsPictures: [
                 CircleAvatar(
-                  foregroundImage: AssetImage('images/roger.jpg'),
+                  foregroundImage: AssetImage('images/perfil.jpg'),
                 )
               ],
               decoration:

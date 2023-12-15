@@ -40,7 +40,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
       imageController.text = imagen;
       categoryController.text = category;
       editorialController.text = editorial;
-      pageController..text = paginas;
+      pageController.text = paginas;
       yearController.text = yeaer;
     }
   }
@@ -155,7 +155,8 @@ class _AddTodoPageState extends State<AddTodoPage> {
       "category": category,
       "editorial": editorial,
       "paginas": page,
-      "year": year
+      "year": year,
+      "is_compled":false
     };
 
     final url = 'http://localhost:8080/api/v1/books';
