@@ -26,9 +26,7 @@ class _CreateBookLoanState extends State<CreateBookLoan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Libros'),
-      ),
+
       body: Visibility(
         visible: isLoanding,
         child: Center(child: CircularProgressIndicator()),

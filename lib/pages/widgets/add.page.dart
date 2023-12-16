@@ -48,9 +48,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(isEdit ? 'Editar' : "add todo"),
-      ),
+
       body: ListView(
         padding: EdgeInsets.all(20),
         children: [
