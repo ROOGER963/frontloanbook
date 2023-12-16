@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:frontloanbook/pages/inicio_page.dart';
+
 import 'package:frontloanbook/pages/splash_screen.dart';
+
 
 
 
@@ -17,6 +20,10 @@ class MyApp extends StatelessWidget {
       routes: {
         "splash":(context) => const SplashScreen(),
         "inicio":(context) => const InicioPage(),
+        
+        
+        
+        
       }
     );
   }

@@ -1,95 +1,96 @@
 import 'package:flutter/material.dart';
+import 'package:frontloanbook/pages/inicio_page.dart';
+import 'package:frontloanbook/pages/login_page.dart';
+import 'package:frontloanbook/pages/widgets/create_book.dart';
 
 class UsersPage extends StatelessWidget {
-  const UsersPage ({super.key});
+  const UsersPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pagina Principal'),
-        backgroundColor: Color.fromRGBO(27, 87, 161, 1),
+        title: Text('Página Principal'),
+        backgroundColor: Color.fromRGBO(30, 63, 104, 1),
       ),
       body: Center(
-        child: Text('Menu unido a proyecto'),
+        child: Text(
+          'Menú unido a proyecto',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.blue,
+          ),
+        ),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text('Bryan Latacumba'),
-              accountEmail: Text('bsm.latacumba@yavirac.edu.ec'),
-              currentAccountPicture: CircleAvatar(
-                foregroundImage: AssetImage('images/profile.png'),
+        child: Container(
+          color: Color.fromRGBO(1, 20, 31, 1), // Fondo del Drawer
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountName: Text(
+                  'Bryan Latacumba',
+                  style: TextStyle(color: Colors.white),
+                ),
+                accountEmail: Text(
+                  'bsm.latacumba@yavirac.edu.ec',
+                  style: TextStyle(color: Colors.white),
+                ),
+                currentAccountPicture: CircleAvatar(
+                  foregroundImage: AssetImage('images/profile.png'),
+                ),
+                otherAccountsPictures: [
+                  CircleAvatar(
+                    foregroundImage: AssetImage('images/perfil.jpg'),
+                  ),
+                ],
               ),
-              otherAccountsPictures: [
-                CircleAvatar(
-                  foregroundImage: AssetImage('images/perfil.jpg'),
-                )
-              ],
-              decoration:
-                  BoxDecoration(color: Color.fromARGB(213, 8, 100, 149)),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // showDialog(
-                //   context: context,
-                //   builder: (BuildContext context) {
-                //     return HomePage();
-                //   },
-                // );
-                // Puedes navegar a la pantalla de libros o realizar alguna acción al presionar el botón
-                print("Presionaste el botón de Libros");
-              },
-              child: ListTile(
-                leading: Icon(Icons.book),
-                title: Text('Libros'),
+              ListTile(
+                leading: Icon(Icons.bookmark_add, color: Colors.white),
+                title: Text(
+                  'Crear Libros',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  // Acción al tocar el elemento
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CreateBookLoan();
+                    },
+                  );
+                },
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // // Muestra el widget de CrearActualizarEliminar al presionar el botón
-                // showDialog(
-                //   context: context,
-                //   builder: (BuildContext context) {
-                //     return CreateBookLoan();
-                //   },
-                // );
-              },
-              child: ListTile(
-                leading: Icon(Icons.bookmark_add),
-                title: Text('Crear Libros'),
+              ListTile(
+                leading: Icon(Icons.add_task, color: Colors.white),
+                title: Text(
+                  'Préstamos',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  // Acción al tocar el elemento
+                },
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Muestra el widget de CrearActualizarEliminar al presionar el botón
-                // showDialog(
-                //   context: context,
-                //   // builder: (BuildContext context) {
-                //   //   return CreateLoanrWidget();
-                //   // },
-                // );
-              },
-              child: ListTile(
-                leading: Icon(Icons.add_task),
-                title: Text('Prestamos'),
+              SizedBox(height: 350),
+              Divider(color: Colors.white),
+              ListTile(
+                leading: Icon(Icons.cancel, color: Colors.white),
+                title: Text(
+                  'Cerrar Sesión',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  // Navegar a HomePage y reemplazar la página actual
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => InicioPage()),
+                  );
+                },
               ),
-            ),
-            SizedBox(height: 350),
-            ListTile(
-              leading: Icon(Icons.cancel),
-              title: Text('Cerrar Sesión'),
-              onTap: () {
-                // // Navegar a HomePage y reemplazar la página actual
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => LoginPage()),
-                // );
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -37,7 +37,7 @@ class _ReadBooksState extends State<ReadBooks> {
       preferredSize: Size.fromHeight(60.0),
       child: AppBar(
         title: Text('Libros'),
-        backgroundColor: const Color.fromARGB(255, 60, 64, 89),
+        backgroundColor: Color.fromARGB(62, 25, 61, 160),
       ),
     );
   }

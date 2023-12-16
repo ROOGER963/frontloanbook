@@ -42,9 +42,9 @@ class _InicioPageState extends State<InicioPage> {
        
         ],
         //color de la barra de navegacion
-        color: Colors.indigo,
+        color: const Color.fromRGBO(63, 81, 181, 1),
         //Color de fondo de iconos
-        buttonBackgroundColor: Colors.white,
+        buttonBackgroundColor: Color.fromARGB(255, 170, 175, 175),
         //Color de fondo detras de la barra
         backgroundColor: Colors.transparent,
         //curva de animacion
@@ -60,6 +60,6 @@ class _InicioPageState extends State<InicioPage> {
     );
   }
   Widget _builNavItem (IconData icon, bool isSelected){
-    return Icon(icon,size: 30, color: isSelected ? Colors.red : Colors.amber, );
+    return Icon(icon,size: 30, color: isSelected ? Color.fromARGB(255, 7, 6, 18) : Color.fromARGB(255, 1, 23, 53), );
   }
 }
