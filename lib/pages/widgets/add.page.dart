@@ -106,8 +106,6 @@ class _AddTodoPageState extends State<AddTodoPage> {
     }
 
     final id = todo['id'];
-   
-
 
     final title = titleController.text;
     final description = decriptionController.text;
@@ -130,15 +128,12 @@ class _AddTodoPageState extends State<AddTodoPage> {
     final response = await http.put(uri,
         body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
 
-        if (response.statusCode == 200) {
-    
+    if (response.statusCode == 200) {
       showSuccessMessage('Actualizado');
     } else {
       showErrorMessage('Error al Actualizar');
-      
     }
   }
-  
 
   Future<void> submitData() async {
     final title = titleController.text;
@@ -156,7 +151,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
       "editorial": editorial,
       "paginas": page,
       "year": year,
-      "is_compled":false
+      "is_compled": false
     };
 
     final url = 'http://localhost:8080/api/v1/books';

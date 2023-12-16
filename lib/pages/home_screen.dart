@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Center(
               child: Container(
                 width: 150.0,
-                height: 150.0,  // Ajusta esta altura para que sea cuadrada
+                height: 150.0, // Ajusta esta altura para que sea cuadrada
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0), // Bordes redondeados
                   image: DecorationImage(
@@ -116,7 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: ListView.builder(
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // 2 columnas
+          crossAxisSpacing: 8.0, // Espaciado horizontal
+          mainAxisSpacing: 8.0, // Espaciado vertical
+        ),
         itemCount: loanData.length,
         itemBuilder: (BuildContext context, int index) {
           return buildBookItem(index);
