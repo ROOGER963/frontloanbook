@@ -5,6 +5,7 @@ import 'package:frontloanbook/pages/widgets/create_book.dart';
 import 'package:frontloanbook/pages/widgets/create_loan.dart';
 
 
+
 class MenuLateral extends StatelessWidget {
   const MenuLateral({Key? key});
 

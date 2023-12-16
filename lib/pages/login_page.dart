@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:frontloanbook/pages/menu_page.dart';
+import 'package:frontloanbook/pages/users_page.dart';
 
 
 
@@ -171,7 +171,7 @@ class LoginPage extends StatelessWidget {
         passwordController.text == contrasenaEjemplo) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MenuLateral()),
+        MaterialPageRoute(builder: (context) => UsersPage()),
       );
     } else {
       showDialog(
