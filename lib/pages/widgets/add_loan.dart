@@ -6,7 +6,8 @@ import 'package:intl/intl.dart';
 
 class AddTodoLoan extends StatefulWidget {
   final Map? todo;
-  const AddTodoLoan({super.key, this.todo});
+
+  const AddTodoLoan({Key? key, this.todo}) : super(key: key);
 
   @override
   State<AddTodoLoan> createState() => _AddTodoLoanState();
@@ -32,79 +33,64 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
       dateLoanController.text = dateLoan;
       returnDateController.text = returnDate;
     }
+
     _selectedLoanDate = DateTime.now();
     _selectedReturnDate = DateTime.now();
+
+    // Asegúrate de que las fechas iniciales cumplan con la condición del predicado
+    if (!isWeekday(_selectedLoanDate)) {
+      _selectedLoanDate = getNextWeekday(_selectedLoanDate);
+    }
+    if (!isWeekday(_selectedReturnDate)) {
+      _selectedReturnDate = getNextWeekday(_selectedReturnDate);
+    }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(isEdit ? 'Editar Prestamo' : 'Prestamo'),
-      ),
-      body: ListView(
-        padding: EdgeInsets.all(16.0),
-        children: [
-          TextField(
-            controller: dateLoanController,
-            readOnly: true,
-            onTap: () async {
-              DateTime? selectedDate = await showDatePicker(
-                context: context,
-                initialDate: _selectedLoanDate,
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2101),
-              );
-              if (selectedDate != null && selectedDate != _selectedLoanDate) {
-                setState(() {
-                  _selectedLoanDate = selectedDate;
-                  dateLoanController.text = formatDate(selectedDate);
-                });
-              }
-            },
-            decoration: InputDecoration(
-              hintText: 'Fecha de Prestamo',
-            ),
-          ),
-          SizedBox(height: 16.0),
-          TextField(
-            controller: returnDateController,
-            readOnly: true,
-            onTap: () async {
-              DateTime? selectedDate = await showDatePicker(
-                context: context,
-                initialDate: _selectedReturnDate,
-                firstDate: DateTime(2000),
-                lastDate: DateTime(2101),
-              );
-              if (selectedDate != null && selectedDate != _selectedReturnDate) {
-                setState(() {
-                  _selectedReturnDate = selectedDate;
-                  returnDateController.text = formatDate(selectedDate);
-                });
-              }
-            },
-            decoration: InputDecoration(
-              hintText: 'Fecha de Devolucion',
-            ),
-          ),
-          SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: isEdit ? updateDate : submitData,
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(isEdit ? 'Actualizar' : 'Crear Prestamo'),
-            ),
-          ),
-        ],
-      ),
-    );
+  bool isWeekday(DateTime date) {
+    return date.weekday >= 1 && date.weekday <= 5;
+  }
+
+  DateTime getNextWeekday(DateTime date) {
+    // Obtén el próximo día laborable (lunes a viernes)
+    while (!isWeekday(date)) {
+      date = date.add(Duration(days: 1));
+    }
+    return date;
+  }
+
+  Future<void> _selectDate(bool isLoanDate) async {
+    DateTime selectedDate = DateTime.now();
+
+    selectedDate = (await showDatePicker(
+      context: context,
+      initialDate: isLoanDate ? _selectedLoanDate : _selectedReturnDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+      selectableDayPredicate: (DateTime date) {
+        return isWeekday(date);
+      },
+    )) ?? DateTime.now();
+
+    setState(() {
+      if (isLoanDate) {
+        _selectedLoanDate = getNextWeekday(selectedDate);
+        dateLoanController.text = formatDate(_selectedLoanDate);
+      } else {
+        _selectedReturnDate = getNextWeekday(selectedDate);
+        returnDateController.text = formatDate(_selectedReturnDate);
+      }
+    });
+  }
+
+  String formatDate(DateTime date) {
+    final formatter = DateFormat('yyyy-MM-dd');
+    return formatter.format(date);
   }
 
   Future<void> updateDate() async {
     final todo = widget.todo;
     if (todo == null) {
-      print('No se pudo llamar a las datos');
+      print('No se pudo llamar a los datos');
       return;
     }
     final id = todo['id'];
@@ -123,20 +109,13 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
-     
       showSuccessMessage('Actualización Hecha');
     } else {
-      showErrosMessage('Algo salio mal');
-     
+      showErrorMessage('Algo salió mal');
     }
   }
 
-  String formatDate(DateTime date) {
-    final formatter = DateFormat('yyyy-MM-dd');
-    return formatter.format(date);
-  }
-
-  void submitData() async {
+  Future<void> submitData() async {
     final dateLoan = formatDate(_selectedLoanDate);
     final returnDate = formatDate(_selectedReturnDate);
     final body = {
@@ -158,7 +137,7 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
       print("Creado fechas de prestamos");
       showSuccessMessage('Creación de fechas');
     } else {
-      showErrosMessage('Algo salio mal');
+      showErrorMessage('Algo salió mal');
       print('Error');
       print(response.body);
     }
@@ -169,14 +148,57 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void showErrosMessage(String message) {
+  void showErrorMessage(String message) {
     final snackBar = SnackBar(
       content: Text(
         message,
         style: TextStyle(color: Colors.white),
       ),
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.red,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(isEdit ? 'Editar Prestamo' : 'Prestamo'),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
+        children: [
+          TextField(
+            controller: dateLoanController,
+            readOnly: true,
+            onTap: () async {
+              await _selectDate(true);
+            },
+            decoration: InputDecoration(
+              hintText: 'Fecha de Prestamo',
+            ),
+          ),
+          SizedBox(height: 16.0),
+          TextField(
+            controller: returnDateController,
+            readOnly: true,
+            onTap: () async {
+              await _selectDate(false);
+            },
+            decoration: InputDecoration(
+              hintText: 'Fecha de Devolucion',
+            ),
+          ),
+          SizedBox(height: 30),
+          ElevatedButton(
+            onPressed: isEdit ? updateDate : submitData,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(isEdit ? 'Actualizar' : 'Crear Prestamo'),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
