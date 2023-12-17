@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:frontloanbook/pages/admin/users_page.dart';
-
-
+import 'package:frontloanbook/pages/widgets/add_register.dart';
 
 class LoginPage extends StatelessWidget {
   static const String routeName = '/home';
@@ -107,6 +106,15 @@ class LoginPage extends StatelessWidget {
                           color: Color.fromRGBO(27, 87, 161, 1),
                         ),
                       ),
+                      SizedBox(height: 20),
+                      FadeInUp(
+                        duration: Duration(milliseconds: 1600),
+                        child: buildMaterialButton(
+                          onPressed: () => _onRegisterPressed(context),
+                          text: "Registro",
+                          color: Color.fromRGBO(27, 87, 161, 1),
+                        ),
+                      ),
                       SizedBox(height: 50),
                     ],
                   ),
@@ -192,5 +200,12 @@ class LoginPage extends StatelessWidget {
         },
       );
     }
+  }
+
+  void _onRegisterPressed(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddPageRegister()),
+    );
   }
 }
