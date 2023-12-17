@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -5,7 +6,7 @@ import 'dart:convert';
 
 class AddTodoPage extends StatefulWidget {
   final Map? todo;
-  const AddTodoPage({super.key, this.todo});
+  const AddTodoPage({Key? key, this.todo}) : super(key: key);
 
   @override
   State<AddTodoPage> createState() => _AddTodoPageState();
@@ -48,54 +49,50 @@ class _AddTodoPageState extends State<AddTodoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-       appBar: AppBar(
+      appBar: AppBar(
         title: Text('Libros'),
         backgroundColor: Colors.blue,
       ),
       body: ListView(
         padding: EdgeInsets.all(20),
         children: [
-          TextField(
-            controller: titleController,
-            decoration: InputDecoration(hintText: 'Titulo'),
-          ),
-          TextField(
-            controller: decriptionController,
-            decoration: InputDecoration(hintText: 'Descripción'),
-            keyboardType: TextInputType.multiline,
-            minLines: 5,
-            maxLines: 10,
-          ),
-          TextField(
-            controller: imageController,
-            decoration: InputDecoration(hintText: 'Imagen'),
-            keyboardType: TextInputType.multiline,
-            maxLines: 3,
-          ),
-          TextField(
-            controller: categoryController,
-            decoration: InputDecoration(hintText: 'Categoria'),
-          ),
-          TextField(
-            controller: editorialController,
-            decoration: InputDecoration(hintText: 'Editorial'),
-          ),
-          TextField(
-            controller: pageController,
-            decoration: InputDecoration(hintText: 'Paginas'),
-          ),
-          TextField(
-            controller: yearController,
-            decoration: InputDecoration(hintText: 'Año'),
-          ),
+          _buildTextField(titleController, 'Titulo'),
+          _buildTextField(decriptionController, 'Descripción', multiline: true),
+          _buildTextField(imageController, 'Imagen', multiline: true),
+          _buildTextField(categoryController, 'Categoria'),
+          _buildTextField(editorialController, 'Editorial'),
+          _buildTextField(pageController, 'Paginas'),
+          _buildTextField(yearController, 'Año'),
           SizedBox(
             height: 50,
           ),
           ElevatedButton(
-              onPressed: isEdit ? updateData : submitData,
-              child: Text(isEdit ? "Actualizar" : "Guardar"))
+            onPressed: isEdit ? updateData : submitData,
+            child: Text(isEdit ? "Actualizar" : "Guardar"),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String hintText,
+      {bool multiline = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: hintText,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.blue), // Color del borde
+          ),
+          filled: true,
+          fillColor: Colors.grey[200], // Color de fondo
+          contentPadding: EdgeInsets.all(12),
+        ),
+        keyboardType: multiline ? TextInputType.multiline : TextInputType.text,
+        maxLines: multiline ? null : 1,
       ),
     );
   }
@@ -127,8 +124,11 @@ class _AddTodoPageState extends State<AddTodoPage> {
     };
     final url = 'http://localhost:8080/api/v1/books/$id';
     final uri = Uri.parse(url);
-    final response = await http.put(uri,
-        body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
+    final response = await http.put(
+      uri,
+      body: jsonEncode(body),
+      headers: {'Content-Type': 'application/json'},
+    );
 
     if (response.statusCode == 200) {
       showSuccessMessage('Actualizado');
@@ -158,8 +158,11 @@ class _AddTodoPageState extends State<AddTodoPage> {
 
     final url = 'http://localhost:8080/api/v1/books';
     final uri = Uri.parse(url);
-    final response = await http.post(uri,
-        body: jsonEncode(body), headers: {'Content-Type': 'application/json'});
+    final response = await http.post(
+      uri,
+      body: jsonEncode(body),
+      headers: {'Content-Type': 'application/json'},
+    );
 
     if (response.statusCode == 201) {
       titleController.text = '';

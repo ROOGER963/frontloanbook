@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -51,7 +50,7 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
   }
 
   DateTime getNextWeekday(DateTime date) {
-    // Obtén el próximo día laborable (lunes a viernes)
+    // día laborable (lunes a viernes)
     while (!isWeekday(date)) {
       date = date.add(Duration(days: 1));
     }
@@ -62,14 +61,15 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
     DateTime selectedDate = DateTime.now();
 
     selectedDate = (await showDatePicker(
-      context: context,
-      initialDate: isLoanDate ? _selectedLoanDate : _selectedReturnDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-      selectableDayPredicate: (DateTime date) {
-        return isWeekday(date);
-      },
-    )) ?? DateTime.now();
+          context: context,
+          initialDate: isLoanDate ? _selectedLoanDate : _selectedReturnDate,
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2101),
+          selectableDayPredicate: (DateTime date) {
+            return isWeekday(date);
+          },
+        )) ??
+        DateTime.now();
 
     setState(() {
       if (isLoanDate) {
@@ -164,6 +164,7 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
     return Scaffold(
       appBar: AppBar(
         title: Text(isEdit ? 'Editar Prestamo' : 'Prestamo'),
+        backgroundColor: Colors.blue,
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
@@ -176,6 +177,10 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
             },
             decoration: InputDecoration(
               hintText: 'Fecha de Prestamo',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              contentPadding: EdgeInsets.all(16.0),
             ),
           ),
           SizedBox(height: 16.0),
@@ -187,6 +192,10 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
             },
             decoration: InputDecoration(
               hintText: 'Fecha de Devolucion',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              contentPadding: EdgeInsets.all(16.0),
             ),
           ),
           SizedBox(height: 30),

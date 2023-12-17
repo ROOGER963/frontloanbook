@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontloanbook/pages/admin/my_drawer_header.dart';
 import 'package:frontloanbook/pages/admin/profile_screen.dart';
 import 'package:frontloanbook/pages/admin/setting_screen.dart';
+import 'package:frontloanbook/pages/inicio_page.dart';
 import 'package:frontloanbook/pages/widgets/create_book.dart';
-
 
 class UsersPage extends StatefulWidget {
   @override
@@ -21,8 +21,9 @@ class _UsersPageState extends State<UsersPage> {
     } else if (currentPage == DrawerSections.contacts) {
       container = SettingScreen();
     } else if (currentPage == DrawerSections.loanbooks) {
-      container = Todoprestamos() ;
-    } 
+      container = Todoprestamos();
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green[700],
@@ -36,6 +37,9 @@ class _UsersPageState extends State<UsersPage> {
               children: [
                 MyHeaderDrawer(),
                 MyDrawerList(),
+                // Añadir el botón para ir a InicioPage
+                menuItem(6, "Exit", Icons.cancel_presentation_outlined,
+                    currentPage == DrawerSections.inicio ? true : false),
               ],
             ),
           ),
@@ -50,7 +54,6 @@ class _UsersPageState extends State<UsersPage> {
         top: 15,
       ),
       child: Column(
-        // shows the list of menu drawer
         children: [
           menuItem(1, "Books", Icons.book,
               currentPage == DrawerSections.dashboard ? true : false),
@@ -85,6 +88,11 @@ class _UsersPageState extends State<UsersPage> {
               currentPage = DrawerSections.privacy_policy;
             } else if (id == 5) {
               currentPage = DrawerSections.send_feedback;
+            } else if (id == 6) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => InicioPage()),
+              );
             }
           });
         },
@@ -121,7 +129,7 @@ enum DrawerSections {
   dashboard,
   contacts,
   loanbooks,
-  
   privacy_policy,
   send_feedback,
+  inicio, 
 }

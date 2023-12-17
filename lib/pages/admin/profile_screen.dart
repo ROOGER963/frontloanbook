@@ -69,7 +69,7 @@ class _TodoprestamosState extends State<Todoprestamos> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: navigateToAddPrestamo, label: Text('prestamo')),
+          onPressed: navigateToAddPrestamo, label: Text('Prestamo')),
     );
   }
 

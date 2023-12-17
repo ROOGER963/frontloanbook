@@ -37,13 +37,19 @@ class _AddPageRegisterState extends State<AddPageRegister> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
+                
                 'Completa el formulario para registrarte',
+      
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                   color: const Color.fromARGB(255, 2, 2, 2),
+                  
                 ),
+                
+                
               ),
+              
               SizedBox(height: 20),
               _buildTextField(nameController, 'Nombre', Icons.person),
               SizedBox(height: 10),
@@ -63,7 +69,7 @@ class _AddPageRegisterState extends State<AddPageRegister> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
+                  primary: const Color.fromARGB(255, 9, 74, 128),
                   padding: EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -92,7 +98,7 @@ class _AddPageRegisterState extends State<AddPageRegister> {
           color: Colors.white,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0), // Bordes redondos
           borderSide: BorderSide.none,
         ),
       ),
@@ -125,7 +131,7 @@ class _AddPageRegisterState extends State<AddPageRegister> {
           },
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(15.0), // Bordes redondos
           borderSide: BorderSide.none,
         ),
       ),
