@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,36 +14,74 @@ class _AddPageRegisterState extends State<AddPageRegister> {
   TextEditingController userController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  bool isPasswordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('registro'),
+        title: Text('Registro'),
+        backgroundColor: Colors.blue,
       ),
-      body: ListView(
+      body: Container(
+        color: Colors.grey[200],
         padding: EdgeInsets.all(20.0),
-        children: [
-          TextField(
-            controller: nameController,
-            decoration: InputDecoration(hintText: 'Nombre'),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildTextField(nameController, 'Nombre'),
+            SizedBox(height: 10),
+            _buildTextField(userController, 'Usuario'),
+            SizedBox(height: 10),
+            _buildTextField(emailController, 'Email'),
+            SizedBox(height: 10),
+            _buildPasswordTextField(),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: submitData,
+              child: Text('Registrar'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String hintText, {bool isPassword = false}) {
+    return TextField(
+      controller: controller,
+      obscureText: isPassword ? !isPasswordVisible : false,
+      decoration: InputDecoration(
+        hintText: hintText,
+        filled: true,
+        fillColor: Colors.white,
+      ),
+    );
+  }
+
+  Widget _buildPasswordTextField() {
+    return TextField(
+      controller: passwordController,
+      obscureText: !isPasswordVisible,
+      decoration: InputDecoration(
+        hintText: 'Contraseña',
+        filled: true,
+        fillColor: Colors.white,
+        suffixIcon: IconButton(
+          icon: Icon(
+            isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+            color: Colors.grey,
           ),
-          TextField(
-            controller: userController,
-            decoration: InputDecoration(hintText: 'usuario'),
-          ),
-          TextField(
-            controller: emailController,
-            decoration: InputDecoration(hintText: 'Email'),
-          ),
-          TextField(
-            controller: passwordController,
-            decoration: InputDecoration(hintText: 'Contraseña'),
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          ElevatedButton(onPressed: submitData, child: Text('Registrar'))
-        ],
+          onPressed: () {
+            setState(() {
+              isPasswordVisible = !isPasswordVisible;
+            });
+          },
+        ),
       ),
     );
   }
@@ -71,9 +108,10 @@ class _AddPageRegisterState extends State<AddPageRegister> {
       emailController.text = '';
       passwordController.text = '';
       print('Usuario creado');
-      showErrosMessage('Usuario Creado');
+      showSuccessMessage('Usuario Creado');
+    } else {
+      showErrosMessage('No se pudo crear el usuario');
     }
-    showErrosMessage('No se pudo crear el usuario');
   }
 
   void showSuccessMessage(String message) {
@@ -87,7 +125,7 @@ class _AddPageRegisterState extends State<AddPageRegister> {
         message,
         style: TextStyle(color: Colors.white),
       ),
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.red,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
