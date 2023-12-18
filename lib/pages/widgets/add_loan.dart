@@ -18,6 +18,7 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
 
   TextEditingController dateLoanController = TextEditingController();
   TextEditingController returnDateController = TextEditingController();
+  TextEditingController libroController = TextEditingController();
 
   bool isEdit = false;
 
@@ -27,12 +28,13 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
     final todo = widget.todo;
     if (todo != null) {
       isEdit = true;
-     
+
       final dateLoan = todo['fechaPrestamo'];
       final returnDate = todo['fechaDevolucion'];
+      final libro = todo['libro'];
       dateLoanController.text = dateLoan;
       returnDateController.text = returnDate;
-      
+      libroController.text = libro; // Agregado para manejar el campo 'libro'
     }
 
     _selectedLoanDate = DateTime.now();
@@ -98,9 +100,11 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
     final id = todo['id'];
     final dateLoan = formatDate(_selectedLoanDate);
     final returnDate = formatDate(_selectedReturnDate);
+    final libro = libroController.text;
     final body = {
       "fechaPrestamo": dateLoan,
       "fechaDevolucion": returnDate,
+      "libro": libro,
       "estadoPrestamo": false,
     };
     final url = 'http://localhost:8080/api/v1/loans/$id';
@@ -120,28 +124,48 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
   Future<void> submitData() async {
     final dateLoan = formatDate(_selectedLoanDate);
     final returnDate = formatDate(_selectedReturnDate);
+    final libro = libroController.text;
     final body = {
       "fechaPrestamo": dateLoan,
       "fechaDevolucion": returnDate,
+      "libro": libro,
       "estadoPrestamo": false,
     };
 
     final url = 'http://localhost:8080/api/v1/loans';
     final uri = Uri.parse((url));
-    final response = await http.post(
-      uri,
-      body: jsonEncode(body),
-      headers: {'Content-Type': 'application/json'},
-    );
-    if (response.statusCode == 201) {
-      dateLoanController.text = '';
-      returnDateController.text = '';
-      print("Creado fechas de prestamos");
-      showSuccessMessage('Creación de fechas');
+
+    if (isEdit) {
+      // Manejar lógica para modo edición si es necesario
+      final id = widget.todo?['id'];
+      final response = await http.put(
+        Uri.parse('$url/$id'),
+        body: jsonEncode(body),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        showSuccessMessage('Actualización Hecha');
+      } else {
+        showErrorMessage('Algo salió mal');
+      }
     } else {
-      showErrorMessage('Algo salió mal');
-      print('Error');
-      print(response.body);
+      // Lógica para modo creación
+      final response = await http.post(
+        uri,
+        body: jsonEncode(body),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 201) {
+        dateLoanController.text = '';
+        returnDateController.text = '';
+        libroController.text = '';
+        print("Creado fechas de prestamos");
+        showSuccessMessage('Creación de fechas');
+      } else {
+        showErrorMessage('Algo salió mal');
+        print('Error');
+        print(response.body);
+      }
     }
   }
 
@@ -194,6 +218,17 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
             },
             decoration: InputDecoration(
               hintText: 'Fecha de Devolucion',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              contentPadding: EdgeInsets.all(16.0),
+            ),
+          ),
+          SizedBox(height: 16.0),
+          TextField(
+            controller: libroController,
+            decoration: InputDecoration(
+              hintText: 'Libro',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),

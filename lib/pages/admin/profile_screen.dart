@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:frontloanbook/pages/widgets/add_loan.dart';
-
 import 'package:http/http.dart' as http;
 
 class Todoprestamos extends StatefulWidget {
@@ -15,9 +14,9 @@ class Todoprestamos extends StatefulWidget {
 class _TodoprestamosState extends State<Todoprestamos> {
   bool isLoading = true;
   List data = [];
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fechTodo();
   }
@@ -25,57 +24,64 @@ class _TodoprestamosState extends State<Todoprestamos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: Visibility(
         visible: isLoading,
         child: Center(child: CircularProgressIndicator()),
         replacement: RefreshIndicator(
           onRefresh: fechTodo,
           child: ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                final dt = data[index] as Map;
-                final id = dt['id'] != null ? dt['id']!.toString() : '';
-                return ListTile(
-                  leading: CircleAvatar(
-                      child: Text(
-                    '${index + 1}',
-                  )),
-                  title: Text(dt['fechaPrestamo']),
-                  subtitle: Text(dt['fechaDevolucion']),
-                  trailing: PopupMenuButton(
-                    onSelected: (value) {
-                      if (value == 'edit') {
-                        navigateToEditPrestamo(dt);
-                      } else if (value == 'delete') {
-                        deleteById(id);
-                      }
-                    },
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem(
-                          child: Text('Editar'),
-                          value: 'edit',
-                        ),
-                        PopupMenuItem(
-                          child: Text('Eliminar'),
-                          value: 'delete',
-                        ),
-                      ];
-                    },
-                  ),
-                );
-              }),
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              final dt = data[index] as Map;
+              final id = dt['id'] != null ? dt['id']!.toString() : '';
+              return ListTile(
+                leading: CircleAvatar(
+                  child: Text('${index + 1}'),
+                ),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Libro: ${dt['libro']}'),
+                    Text('Fecha de Préstamo: ${dt['fechaPrestamo']}'),
+                  ],
+                ),
+                subtitle: Text('Fecha de Devolución: ${dt['fechaDevolucion']}'),
+                trailing: PopupMenuButton(
+                  onSelected: (value) {
+                    if (value == 'edit') {
+                      navigateToEditPrestamo(dt);
+                    } else if (value == 'delete') {
+                      deleteById(id);
+                    }
+                  },
+                  itemBuilder: (context) {
+                    return [
+                    /*PopupMenuItem(
+                        child: Text('Editar'),
+                        value: 'edit',
+                      ),*/
+                      PopupMenuItem(
+                        child: Text('Eliminar'),
+                        value: 'delete',
+                      ),
+                    ];
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: navigateToAddPrestamo, label: Text('Prestamo')),
+        onPressed: navigateToAddPrestamo,
+        label: Text('Prestamo'),
+      ),
     );
   }
 
   Future<void> navigateToEditPrestamo(Map dt) async {
-    final route = MaterialPageRoute(builder: (context) => AddTodoLoan(todo:dt));
-     await Navigator.push(context, route);
+    final route = MaterialPageRoute(builder: (context) => AddTodoLoan(todo: dt));
+    await Navigator.push(context, route);
     setState(() {
       isLoading = true;
     });
