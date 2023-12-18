@@ -27,10 +27,12 @@ class _AddTodoLoanState extends State<AddTodoLoan> {
     final todo = widget.todo;
     if (todo != null) {
       isEdit = true;
+     
       final dateLoan = todo['fechaPrestamo'];
       final returnDate = todo['fechaDevolucion'];
       dateLoanController.text = dateLoan;
       returnDateController.text = returnDate;
+      
     }
 
     _selectedLoanDate = DateTime.now();
