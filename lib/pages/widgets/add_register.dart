@@ -51,7 +51,7 @@ class _AddPageRegisterState extends State<AddPageRegister> {
               ),
               
               SizedBox(height: 20),
-              _buildTextField(nameController, 'Nombre', Icons.person),
+              _buildTextField(nameController, 'Cedula', Icons.key),
               SizedBox(height: 10),
               _buildTextField(userController, 'Usuario', Icons.account_circle),
               SizedBox(height: 10),
