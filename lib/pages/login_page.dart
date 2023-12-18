@@ -83,8 +83,8 @@ class LoginPage extends StatelessWidget {
                             children: <Widget>[
                               buildTextField(
                                 controller: emailController,
-                                hintText: "Correo electrónico",
-                                prefixIcon: Icons.email,
+                                hintText: "Nombre",
+                                prefixIcon: Icons.person,
                               ),
                               buildTextField(
                                 controller: passwordController,
