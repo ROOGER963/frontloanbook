@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -29,20 +28,13 @@ class _AddTodoPageState extends State<AddTodoPage> {
     final todo = widget.todo;
     if (todo != null) {
       isEdit = true;
-      final title = todo['titulo'];
-      final descripcione = todo['descripcion'];
-      final imagen = todo['imagen'];
-      final category = todo['category'];
-      final editorial = todo['editorial'];
-      final paginas = todo['paginas'];
-      final yeaer = todo['year'];
-      titleController.text = title;
-      decriptionController.text = descripcione;
-      imageController.text = imagen;
-      categoryController.text = category;
-      editorialController.text = editorial;
-      pageController.text = paginas;
-      yearController.text = yeaer;
+      titleController.text = todo['titulo'] ?? '';
+      decriptionController.text = todo['descripcion'] ?? '';
+      imageController.text = todo['imagen'] ?? '';
+      categoryController.text = todo['category'] ?? '';
+      editorialController.text = todo['editorial'] ?? '';
+      pageController.text = (todo['paginas'] ?? '').toString();
+      yearController.text = (todo['year'] ?? '').toString();
     }
   }
 
@@ -109,7 +101,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
     final title = titleController.text;
     final description = decriptionController.text;
     final imagen = imageController.text;
-    final category = categoryController.text;
+    final category = categoryController.text; // Asegurarse de que no sea nulo
     final editorial = editorialController.text;
     final page = pageController.text;
     final year = yearController.text;
@@ -141,7 +133,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
     final title = titleController.text;
     final description = decriptionController.text;
     final imagen = imageController.text;
-    final category = categoryController.text;
+    final category = categoryController.text; // Asegurarse de que no sea nulo
     final editorial = editorialController.text;
     final page = pageController.text;
     final year = yearController.text;

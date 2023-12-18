@@ -22,10 +22,12 @@ class _HomeScreenState extends State<HomeScreen> {
     final http.Response response = await http.get(url);
 
     if (response.statusCode == 200) {
-      print("Puedes ver tus datos");
-    } else {
-      throw Exception("Fallo la conexión");
-    }
+  print("Puedes ver tus datos");
+} else {
+  print("Fallo la conexión. Código de estado: ${response.statusCode}");
+  print("Cuerpo de la respuesta: ${response.body}");
+  throw Exception("Fallo la conexión");
+}
 
     setState(() {
       loanData = List<Map<String, dynamic>>.from(json.decode(response.body)['data']);
