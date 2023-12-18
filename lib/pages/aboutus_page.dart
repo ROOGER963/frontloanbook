@@ -84,7 +84,7 @@ class _BonitaPantallaState extends State<BonitaPantalla> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
-                          'Ofrecer un sistema de gestión de préstamos de libros sencillo, accesible y seguro para cafeteras, eventos, estanterías portátiles u otros negocios pequeños.',
+                          'Ofrecer a nuestros clientes la oportunidad de acceder a la cultura y al conocimiento, a través del préstamo de libros físicos, con tarifas accesibles, planes de suscripción flexibles y programas de becas para personas con dificultades económicas.',
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 18),
                         ),
@@ -151,7 +151,7 @@ class _BonitaPantallaState extends State<BonitaPantalla> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
-                          'Ser el líder en la gestión de préstamos de libros para negocios pequeños, proporcionando un servicio que sea fácil de usar, asequible y que satisfaga las necesidades de nuestros clientes.',
+                          'En 2025 ser una empresa reconocida en la ciudad de Quito, en el préstamo de libros físicos, ofreciendo un servicio accesible, de calidad y con un amplio catálogo de títulos, con un servicio al cliente personalizado y eficiente.',
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 18),
                         ),
