@@ -32,15 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  PreferredSizeWidget buildAppBar() {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(60.0),
-      child: AppBar(
-        title: Text('Libros'),
-        backgroundColor: Color.fromARGB(255, 52, 69, 183), // Azul elegante
-      ),
-    );
-  }
+
 
   Widget buildBookItem(int index) {
     return Container(
@@ -115,7 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, // 2 columnas
