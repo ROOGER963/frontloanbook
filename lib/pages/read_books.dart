@@ -42,28 +42,27 @@ class _ReadBooksState extends State<ReadBooks> {
     );
   }
 
- 
-Widget buildBookItem(int index) {
-  return Container(
-    margin: EdgeInsets.all(10.0),
-    child: Card(
-      elevation: 5.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Imagen
-          Center(
-            child: Container(
-              width: 150.0,
-              height: 150.0,  // Ajusta esta altura para que sea cuadrada
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(loanData[index]["imagen"]),
+  Widget buildBookItem(int index) {
+    return Container(
+      margin: EdgeInsets.all(10.0),
+      child: Card(
+        elevation: 5.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Imagen
+            Center(
+              child: Container(
+                width: double.infinity,
+                height: 50.0,  // Ajusta esta altura según sea necesario
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(loanData[index]["imagen"]),
+                  ),
                 ),
               ),
             ),
-          ),
             // Información
             Padding(
               padding: const EdgeInsets.all(10.0),

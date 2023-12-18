@@ -12,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    var d = const Duration(seconds: 4);
+    var d = const Duration(seconds: 10);
     Future.delayed(d, () {
       Navigator.pushAndRemoveUntil(
           context,

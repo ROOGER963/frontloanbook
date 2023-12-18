@@ -18,8 +18,8 @@ class _InicioPageState extends State<InicioPage> {
 
   final List<Widget> _pages = [
     HomeScreen(),
-    FavoritosPage(),
-    AboutUsPAge(),
+    //FavoritosPage(),
+    BonitaPantalla(),
     LoginPage(),
   ];
 
@@ -36,7 +36,7 @@ class _InicioPageState extends State<InicioPage> {
         height: 60,
         items: <Widget>[
           _builNavItem(Icons.auto_stories_outlined, _selectedTab == 0),
-          _builNavItem(Icons.favorite, _selectedTab == 1),
+        // _builNavItem(Icons.favorite, _selectedTab == 1),
           _builNavItem(Icons.data_usage_sharp, _selectedTab == 2),
           _builNavItem(Icons.login, _selectedTab == 3),
        
@@ -44,7 +44,7 @@ class _InicioPageState extends State<InicioPage> {
         //color de la barra de navegacion
         color: const Color.fromRGBO(63, 81, 181, 1),
         //Color de fondo de iconos
-        buttonBackgroundColor: Color.fromARGB(255, 170, 175, 175),
+        buttonBackgroundColor: Color.fromARGB(255, 165, 197, 197),
         //Color de fondo detras de la barra
         backgroundColor: Colors.transparent,
         //curva de animacion

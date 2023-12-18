@@ -18,9 +18,11 @@ class _UsersPageState extends State<UsersPage> {
     var container;
     if (currentPage == DrawerSections.dashboard) {
       container = CreateBookLoan();
-    } else if (currentPage == DrawerSections.contacts) {
-      container = SettingScreen();
-    } else if (currentPage == DrawerSections.loanbooks) {
+    }
+    /*else if (currentPage == DrawerSections.contacts) {
+      container = SettingScreen();}
+      */
+    else if (currentPage == DrawerSections.loanbooks) {
       container = Todoprestamos();
     }
 
@@ -57,8 +59,9 @@ class _UsersPageState extends State<UsersPage> {
         children: [
           menuItem(1, "Books", Icons.book,
               currentPage == DrawerSections.dashboard ? true : false),
+              /*
           menuItem(2, "Contacts", Icons.people_alt_outlined,
-              currentPage == DrawerSections.contacts ? true : false),
+              currentPage == DrawerSections.contacts ? true : false),*/
           menuItem(3, "Prestamos", Icons.safety_check,
               currentPage == DrawerSections.loanbooks ? true : false),
           Divider(),
@@ -80,9 +83,9 @@ class _UsersPageState extends State<UsersPage> {
           setState(() {
             if (id == 1) {
               currentPage = DrawerSections.dashboard;
-            } else if (id == 2) {
+            } /*else if (id == 2) {
               currentPage = DrawerSections.contacts;
-            } else if (id == 3) {
+            }*/ else if (id == 3) {
               currentPage = DrawerSections.loanbooks;
             } else if (id == 4) {
               currentPage = DrawerSections.privacy_policy;
@@ -127,9 +130,10 @@ class _UsersPageState extends State<UsersPage> {
 
 enum DrawerSections {
   dashboard,
-  contacts,
+  /*
+  contacts,*/
   loanbooks,
   privacy_policy,
   send_feedback,
-  inicio, 
+  inicio,
 }
